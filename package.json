@@ -1,0 +1,43 @@
+{
+  "name": "url_shortener",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "packages/*",
+    "services/*"
+  ],
+  "description": "Link shortener dummy project",
+  "packageManager": "npm@10.9.2",
+  "scripts": {
+    "build": "tsc --build tsconfig.build.json",
+    "dev": "turbo run dev",
+    "test": "turbo run test",
+    "lint": "turbo run lint",
+    "lint:fix": "turbo run lint:fix",
+    "format": "prettier --write \"**/*.ts\"",
+    "clean": "turbo run clean"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chicasso/url_shortener"
+  },
+  "keywords": [
+    "url",
+    "link-shortener"
+  ],
+  "author": "chiraggandherva08@gmail.com",
+  "license": "ISC",
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/express": "^5.0.6",
+    "@types/node": "^25.5.0",
+    "eslint": "^10.0.3",
+    "eslint-config-prettier": "^10.1.8",
+    "jiti": "^2.6.1",
+    "prettier": "^3.8.1",
+    "ts-node-dev": "^2.0.0",
+    "turbo": "^2.8.17",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.57.1"
+  }
+}
