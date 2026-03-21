@@ -1,4 +1,6 @@
 import mongoose from 'mongoose';
+import { MongoServerError } from 'mongodb';
+import logger from '@url-shortener/logger';
 
 export default class MongoDB {
   private static instance: mongoose.Connection;
@@ -10,15 +12,24 @@ export default class MongoDB {
     return MongoDB.instance;
   }
 
-  public static async connect(uri: string, options?: mongoose.ConnectOptions): Promise<void> {
+  public static async connect(uri?: string, options?: mongoose.ConnectOptions): Promise<void> {
     if (mongoose.connection.readyState !== mongoose.ConnectionStates.connected) {
       try {
-        await mongoose.connect(uri, options);
+        await mongoose.connect(uri as string, options);
         MongoDB.instance = mongoose.connection;
       } catch (error) {
-        console.error('Error connecting to MongoDB:', error);
+        logger.error(`Error connecting to MongoDB: ${(error as MongoServerError).message}`);
         throw error;
       }
     }
+  }
+
+  public static getDefaultConnectionOptions(): mongoose.ConnectOptions {
+    return {
+      minPoolSize: 0,
+      maxPoolSize: 10,
+      socketTimeoutMS: 45000,
+      serverSelectionTimeoutMS: 5000,
+    } as mongoose.ConnectOptions;
   }
 }

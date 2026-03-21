@@ -9,7 +9,7 @@ export default class LoginModule {
   static login = async (
     req: Request<ParamsDictionary, unknown, LoginRequestPayload, ParsedQs>,
     res: Response,
-    next: NextFunction
+    next: NextFunction,
   ) => {
     try {
       const { email, password } = req.body;
