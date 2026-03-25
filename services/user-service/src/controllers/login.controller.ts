@@ -1,6 +1,6 @@
 import { Response, LoginResponse, LoginRequestPayload, UserQueries } from '@url-shortener/common';
 
-export default class LoginController {
+export class LoginController {
   static async login(params: LoginRequestPayload): Promise<Response<LoginResponse>> {
     const { email, password } = params;
     const userResp = await UserQueries.findUserByEmail(email);

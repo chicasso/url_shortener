@@ -1,15 +1,19 @@
 export function defaultConfig() {
   return {
-    port: 3000,
+    port: '8080',
+    jwtSecret: "secret_key",
+    mongoUri: "mongodb://localhost:27017/url_shortener",
   };
 }
 
 export function getConfig() {
-  const { port } = defaultConfig();
+  const { port, mongoUri, jwtSecret } = defaultConfig();
   const config = {
+    env: process.env.NODE_ENV,
     port: process.env.PORT || port,
-    mongoUri: process.env.MONGO_URI,
-    jwtSecret: process.env.JWT_SECRET,
+    mongoUri: process.env.MONGO_URI || mongoUri,
+    jwtSecret: process.env.JWT_SECRET || jwtSecret,
+    logLevel: process.env.LOG_LEVEL || 'info',
   };
 
   if (!config.mongoUri) {

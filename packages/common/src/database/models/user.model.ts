@@ -1,50 +1,42 @@
-import { model, Schema } from 'mongoose';
+import mongoose, { model, Schema } from 'mongoose';
+import { IUser } from '../../types/models/user.ts';
 
-export interface IUser {
-  email: string;
-  userName: string;
-  password: string;
-  countryCode: string;
-  phoneNumber: string;
-  subscriptionId: string;
-  profileUrl: string;
-  profileIcon: string;
-  deleted: boolean;
-  createdAt: Date;
-  updatedAt: Date;
-}
+export interface User extends IUser, mongoose.Document {};
 
-const userSchema = new Schema<IUser>({
-  email: {
-    type: String,
-    unique: true,
-    required: true,
+const userSchema = new Schema<User>(
+  {
+    email: {
+      type: String,
+      unique: true,
+      required: true,
+    },
+    userName: { type: String },
+    password: {
+      type: String,
+      required: true,
+    },
+    countryCode: { type: String },
+    phoneNumber: { type: String },
+    subscriptionId: { type: String },
+    profileUrl: { type: String },
+    profileIcon: { type: String },
+    deleted: {
+      type: Boolean,
+      default: false,
+    },
+    createdAt: {
+      type: Date,
+      default: Date.now,
+    },
+    updatedAt: {
+      type: Date,
+      default: Date.now,
+    },
   },
-  userName: { type: String },
-  password: {
-    type: String,
-    required: true,
-  },
-  countryCode: { type: String },
-  phoneNumber: { type: String },
-  subscriptionId: { type: String },
-  profileUrl: { type: String },
-  profileIcon: { type: String },
-  deleted: {
-    type: Boolean,
-    default: false,
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
-  updatedAt: {
-    type: Date,
-    default: Date.now,
-  },
-}, { timestamps: true });
+  { timestamps: true, versionKey: false },
+);
 
 userSchema.index({ email: 1 });
 userSchema.index({ phoneNumber: 1 });
 
-export const User = model<IUser>('User', userSchema);
+export const UserModel = model<User>('User', userSchema);

@@ -1,18 +1,9 @@
-import { model, Schema } from 'mongoose';
+import mongoose, { model, Schema } from 'mongoose';
+import { IShortenedURL } from '../../types/models/shortened-url.ts';
 
-export interface IShortenedURL {
-  userId: string;
-  originalUrl: string;
-  shortenedUrl: string;
-  active: boolean;
-  deleted: boolean;
-  expired: boolean;
-  expiresAt: Date;
-  createdAt: Date;
-  updatedAt: Date;
-}
+export interface ShortenedURL extends IShortenedURL, mongoose.Document {};
 
-const shortenedURLSchema = new Schema<IShortenedURL>(
+const shortenedURLSchema = new Schema<ShortenedURL>(
   {
     userId: {
       type: String,
@@ -56,4 +47,4 @@ shortenedURLSchema.index({ userId: 1, expired: 1 });
 shortenedURLSchema.index({ expired: 1, expiresAt: 1 });
 shortenedURLSchema.index({ shortenedUrl: 1, expired: 1 });
 
-export const ShortenedURL = model<IShortenedURL>('ShortenedURL', shortenedURLSchema);
+export const ShortenedURLModel = model<ShortenedURL>('ShortenedURL', shortenedURLSchema);

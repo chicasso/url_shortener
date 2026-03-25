@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import { MongoServerError } from 'mongodb';
 import logger from '@url-shortener/logger';
 
-export default class MongoDB {
+export class MongoDB {
   private static instance: mongoose.Connection;
   
   public static getInstance(): mongoose.Connection {

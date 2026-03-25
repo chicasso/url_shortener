@@ -15,6 +15,9 @@
     "dev": "tsc --build --watch",
     "clean": "rimraf dist tsconfig.tsbuildinfo"
   },
+  "dependencies": {
+    "dotenv": "^16.3.1"
+  },
   "devDependencies": {
     "typescript": "*",
     "rimraf": "^5.0.0"

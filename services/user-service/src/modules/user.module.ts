@@ -3,9 +3,9 @@ import { Request, Response, NextFunction } from 'express';
 import { ParamsDictionary } from 'express-serve-static-core';
 
 import { LoginRequestPayload } from '@url-shortener/common';
-import LoginController from '../controllers/login.controller.js';
+import { LoginController } from '../controllers/login.controller.js';
 
-export default class LoginModule {
+export class LoginModule {
   static login = async (
     req: Request<ParamsDictionary, unknown, LoginRequestPayload, ParsedQs>,
     res: Response,

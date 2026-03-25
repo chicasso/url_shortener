@@ -3,7 +3,7 @@ import logger from '@url-shortener/logger';
 import { Request, Response, NextFunction } from 'express';
 import { getConfig } from '@url-shortener/config';
 
-export default function authenticate(
+export function authenticate(
   req: Request<unknown, unknown, unknown, unknown>,
   res: Response,
   next: NextFunction,
