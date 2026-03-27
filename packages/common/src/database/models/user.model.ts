@@ -8,15 +8,14 @@ const userSchema = new Schema<User>(
     email: {
       type: String,
       unique: true,
-      required: true,
     },
     userName: { type: String },
-    password: {
-      type: String,
-      required: true,
-    },
+    password: { type: String },
     countryCode: { type: String },
-    phoneNumber: { type: String },
+    phoneNumber: {
+      type: String,
+      unique: true,
+    },
     subscriptionId: { type: String },
     profileUrl: { type: String },
     profileIcon: { type: String },
@@ -39,4 +38,4 @@ const userSchema = new Schema<User>(
 userSchema.index({ email: 1 });
 userSchema.index({ phoneNumber: 1 });
 
-export const UserModel = model<User>('User', userSchema);
+export const UserModel = model<User>('user', userSchema);

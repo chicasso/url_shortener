@@ -14,6 +14,8 @@ export function getConfig() {
     mongoUri: process.env.MONGO_URI || mongoUri,
     jwtSecret: process.env.JWT_SECRET || jwtSecret,
     logLevel: process.env.LOG_LEVEL || 'info',
+    expiresIn: Number(process.env.EXPIRES_IN),
+    algorithm: process.env.ALGORITHM || 'HS256',
   };
 
   if (!config.mongoUri) {

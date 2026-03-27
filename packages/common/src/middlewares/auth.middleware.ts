@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import logger from '@url-shortener/logger';
+import { defaultLogger as logger } from '../logger/logger.ts';
 import { Request, Response, NextFunction } from 'express';
 import { getConfig } from '@url-shortener/config';
 
@@ -14,7 +14,7 @@ export function authenticate(
     return;
   }
   try {
-    const decoded = jwt.verify(token, getConfig().jwtSecret as string) as { userId: string }; 
+    const decoded = jwt.verify(token, getConfig().jwtSecret) as { userId: string }; 
     (req as unknown as { user: { userId: string } }).user = decoded;
     return next();
   } catch (err) {

@@ -1,13 +1,12 @@
-import { HydratedDocument } from "mongoose";
-import logger from "@url-shortener/logger";
 import { MongoServerError } from "mongodb";
-import { IUser } from "../../types/models/user.ts";
-import { UserModel } from "../models/user.model.ts";
+import { Projection } from "../../types/mongodb.ts";
+import { User, UserModel } from "../models/user.model.ts";
+import { defaultLogger as logger } from "../../logger/logger.ts";
 import { SuccessMessages, ErrorMessages } from "../../constants/messages.ts";
 
 export class UserQueries {
-  static async createUser(email: string, password: string): Promise<{
-    error: boolean, message: string, user: HydratedDocument<IUser> | null,
+  static async createUser(email: string, password?: string): Promise<{
+    error: boolean, message: string, user: User | null,
   }> {
     try {
       const user = await UserModel.create({ email, password });
@@ -23,12 +22,12 @@ export class UserQueries {
     }
   }
 
-  static async findUserByEmail(email: string): Promise<{
-    error: boolean, message: string, user: IUser | null
+  static async findUserByEmail(email: string, projection?: Projection<User>): Promise<{
+    error: boolean, message: string, user: User | null,
   }> {
     try {
       const user = await UserModel.findOne({ email })
-        .select({ password: 0 })
+        .select(projection || { password: 0 })
         .lean();
       return { error: false, message: SuccessMessages.USER_FOUND, user };
     } catch (error) {
@@ -37,10 +36,12 @@ export class UserQueries {
     }
   }
 
-  static async findUserById(id: string): Promise<{ error: boolean, message: string, user: IUser | null }> {
+  static async findUserById(id: string, projection?: Projection<User>): Promise<{
+    error: boolean, message: string, user: User | null,
+  }> {
     try {
       const user = await UserModel.findById(id)
-        .select({ password: 0 })
+        .select(projection || { password: 0 })
         .lean();
       return { error: false, message: SuccessMessages.USER_FOUND, user };
     } catch (error) {
@@ -49,12 +50,12 @@ export class UserQueries {
     }
   }
 
-  static async updateUser( id: string, updateData: Partial<IUser> ): Promise<{
-    error: boolean, message: string, user: IUser | null,
+  static async updateUser(id: string, updateData: Partial<User>, projection?: Projection<User>): Promise<{
+    error: boolean, message: string, user: User | null,
   }> {
     try {
       const user = await UserModel.findByIdAndUpdate(id, updateData, { new: true })
-        .select(updateData)
+        .select(projection || { email: 1, userName: 1, phoneNumber: 1 })
         .lean();
       if (!user) {
         return { error: true, message: ErrorMessages.USER_NOT_FOUND, user: null };

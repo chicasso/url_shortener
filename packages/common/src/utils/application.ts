@@ -2,7 +2,7 @@ import http from 'http';
 import express from 'express';
 import { MongoDB } from "../database/connect.ts";
 import { getConfig } from "@url-shortener/config";
-import { createLogger } from '@url-shortener/logger';
+import { createLogger } from "../logger/logger.ts";
 import { retry } from './retry.ts';
 
 export class App {
@@ -11,7 +11,7 @@ export class App {
   private config: ReturnType<typeof getConfig>;
   private logger: ReturnType<typeof createLogger>;
 
-  constructor(private svcName: string) {
+  constructor(svcName: string) {
     this.app = express();
     this.config = getConfig();
     this.logger = createLogger(svcName);

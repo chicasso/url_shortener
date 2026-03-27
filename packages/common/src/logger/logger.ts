@@ -1,4 +1,3 @@
-
 import pino, { LoggerOptions } from 'pino';
 import { isProd } from '@url-shortener/common';
 import { getConfig } from '@url-shortener/config';

@@ -3,7 +3,6 @@
   "references": [
     { "path": "./packages/config" },
     { "path": "./packages/common" },
-    { "path": "./packages/logger" },
     { "path": "./services/user-service" }
   ]
 }

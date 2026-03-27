@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import { MongoServerError } from 'mongodb';
-import logger from '@url-shortener/logger';
+import { defaultLogger as logger } from '../logger/logger.ts';
 
 export class MongoDB {
   private static instance: mongoose.Connection;

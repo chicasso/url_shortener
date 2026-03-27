@@ -9,7 +9,7 @@
   "description": "Link shortener dummy project",
   "packageManager": "npm@10.9.2",
   "scripts": {
-    "build": "tsc --build tsconfig.build.json",
+    "build": "turbo run build",
     "dev": "turbo run dev",
     "test": "turbo run test",
     "lint": "turbo run lint",

@@ -1,8 +1,9 @@
-export interface IShortenedURL {
+export interface IShortUrl {
   userId: string;
   originalUrl: string;
-  shortenedUrl: string;
+  shortUrl: string;
   active: boolean;
+  deactivatedAt: Date;
   deleted: boolean;
   expired: boolean;
   expiresAt: Date;

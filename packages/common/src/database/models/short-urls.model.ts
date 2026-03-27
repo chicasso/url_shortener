@@ -1,9 +1,9 @@
 import mongoose, { model, Schema } from 'mongoose';
-import { IShortenedURL } from '../../types/models/shortened-url.ts';
+import { IShortUrl } from '../../types/models/short-url.js';
 
-export interface ShortenedURL extends IShortenedURL, mongoose.Document {};
+export interface ShortUrl extends IShortUrl, mongoose.Document {};
 
-const shortenedURLSchema = new Schema<ShortenedURL>(
+const ShortUrlSchema = new Schema<ShortUrl>(
   {
     userId: {
       type: String,
@@ -13,7 +13,7 @@ const shortenedURLSchema = new Schema<ShortenedURL>(
       type: String,
       required: true,
     },
-    shortenedUrl: {
+    shortUrl: {
       type: String,
       unique: true,
       required: true,
@@ -22,6 +22,7 @@ const shortenedURLSchema = new Schema<ShortenedURL>(
       type: Boolean,
       default: true,
     },
+    deactivatedAt: { type: Date },
     deleted: {
       type: Boolean,
       default: false,
@@ -43,8 +44,8 @@ const shortenedURLSchema = new Schema<ShortenedURL>(
   { timestamps: true },
 );
 
-shortenedURLSchema.index({ userId: 1, expired: 1 });
-shortenedURLSchema.index({ expired: 1, expiresAt: 1 });
-shortenedURLSchema.index({ shortenedUrl: 1, expired: 1 });
+ShortUrlSchema.index({ userId: 1, expired: 1 });
+ShortUrlSchema.index({ expired: 1, expiresAt: 1 });
+ShortUrlSchema.index({ shortUrl: 1, expired: 1 });
 
-export const ShortenedURLModel = model<ShortenedURL>('ShortenedURL', shortenedURLSchema);
+export const ShortUrlModel = model<ShortUrl>('short_url', ShortUrlSchema);
