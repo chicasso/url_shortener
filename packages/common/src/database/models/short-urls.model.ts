@@ -1,5 +1,5 @@
 import mongoose, { model, Schema } from 'mongoose';
-import { IShortUrl } from '../../types/models/short-url.js';
+import { IShortUrl } from '../../types/models/short-url.ts';
 
 export interface ShortUrl extends IShortUrl, mongoose.Document {};
 
@@ -9,6 +9,8 @@ const ShortUrlSchema = new Schema<ShortUrl>(
       type: String,
       required: true,
     },
+    name: { type: String },
+    tags: [{ type: String }],
     originalUrl: {
       type: String,
       required: true,

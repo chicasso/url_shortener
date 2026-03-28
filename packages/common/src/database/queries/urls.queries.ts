@@ -1,8 +1,6 @@
 import { MongoServerError } from "mongodb";
-import { HydratedDocument } from "mongoose";
-import { IShortUrl } from "../../types/models/short-url.ts";
 import { defaultLogger as logger } from "../../logger/logger.ts";
-import { ErrorMessages, ShortUrlModel, SuccessMessages } from "../../index.ts";
+import { ErrorMessages, Projection, ShortUrl, ShortUrlModel, SuccessMessages } from "../../index.ts";
 
 export class ShortUrlQueries {
   static async createShortUrl({ userId, originalUrl, shortUrl, expiresAt }: {
@@ -13,7 +11,7 @@ export class ShortUrlQueries {
   }): Promise<{
     error: boolean,
     message: string,
-    shortUrl: HydratedDocument<IShortUrl> | null,
+    shortUrl: ShortUrl | null,
   }> {
     try {
       const generatedShortUrl = await ShortUrlModel.create({
@@ -32,12 +30,13 @@ export class ShortUrlQueries {
   static async fetchShortUrls(
     userId: string,
     limit: number = 10,
-    createdAt?: Date,
-    continuationToken?: string,
+    createdAt?: string,
+    id?: string,
+    projection?: Projection<ShortUrl>,
   ): Promise<{
     error: boolean,
     message: string,
-    shortUrls: IShortUrl[],
+    shortUrls: ShortUrl[],
   }> {
     try {
       const shortUrls = await ShortUrlModel.find({
@@ -46,8 +45,9 @@ export class ShortUrlQueries {
         active: true,
         deleted: false,
         ...(createdAt && { createdAt: { $gte: createdAt } }),
-        ...(continuationToken && { _id: { $gt: continuationToken } }),
+        ...(id && { _id: { $gt: id } }),
       })
+        .select(projection || {})
         .sort({ createdAt: -1, _id: -1 })
         .limit(limit)
         .lean();

@@ -5,3 +5,17 @@ export interface Response<T> {
   data?: T;
   error?: { message: string; code?: string; };
 }
+
+declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
+  namespace Express {
+    interface Request {
+      user?: {
+        userId: string;
+        email?: string;
+      };
+    }
+  }
+}
+
+export { Request as IRequest } from 'express';

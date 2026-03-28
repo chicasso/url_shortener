@@ -1,5 +1,5 @@
-export * from './types/api.js';
-export * from './types/userApi.js';
+export * from './types/api.ts';
+export * from './types/userApi.ts';
 export * from './database/index.ts'
 export * from './utils/application.ts';
 export * from './utils/general.ts';
@@ -10,3 +10,7 @@ export * from './types/general.ts';
 export * from './logger/logger.ts';
 export * from './utils/jwt.ts';
 export * from './types/mongodb.ts';
+export * from './middlewares/auth.middleware.ts';
+export * from './controllers/ping.ts';
+export * from './middlewares/error.middleware.ts';
+export * from './middlewares/notFound.middleware.ts';

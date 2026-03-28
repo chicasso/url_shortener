@@ -67,10 +67,11 @@ export class App {
     this.logger.info('Connected to MongoDB');
   }
 
-  public async init() {
+  public async init(): Promise<App> {
     try {
       await this.connectDB();
       this.startServer();
+      return this;
     } catch (error) {
       this.logger.fatal(`App failed to start: ${(error as Error).message}`);
       process.exit(1);

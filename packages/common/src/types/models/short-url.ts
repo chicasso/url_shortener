@@ -1,5 +1,7 @@
 export interface IShortUrl {
   userId: string;
+  name: string;
+  tags: string[];
   originalUrl: string;
   shortUrl: string;
   active: boolean;
